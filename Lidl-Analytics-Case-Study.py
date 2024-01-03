@@ -29,7 +29,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# In[3]:
+# In[2]:
 
 
 url = 'https://raw.githubusercontent.com/fivethirtyeight/data/master/candy-power-ranking/candy-data.csv'
@@ -37,7 +37,7 @@ url = 'https://raw.githubusercontent.com/fivethirtyeight/data/master/candy-power
 
 # ### load  **Candy Power Ranking** dataset
 
-# In[39]:
+# In[3]:
 
 
 df=pd.read_csv(url)
@@ -115,7 +115,7 @@ df.describe(include='float64').T
 
 # ### descriptive statistics on categorical variables
 
-# In[8]:
+# In[9]:
 
 
 cols=df.columns.tolist() ## cols stores all the column names.
@@ -172,14 +172,14 @@ plt.show()
 
 # ## Let's create visualizations highlighting the distinguishing characteristics that contribute to a candy's popularity, whether it ranks among the most favored or least favored.
 
-# In[35]:
+# In[13]:
 
 
 cat_vars=["chocolate","fruity","caramel","peanutyalmondy","nougat","crispedricewafer","hard","bar","pluribus"]
 cont_vars=['sugarpercent','pricepercent','winpercent']
 
 
-# In[75]:
+# In[14]:
 
 
 # function to visualize the properties of  most and least 15 popular Candies.
@@ -219,7 +219,7 @@ def visualize_most_least_popular_candies(df_l,type):
     plt.show()
 
 
-# In[76]:
+# In[15]:
 
 
 visualize_most_least_popular_candies(df.sort_values(by="winpercent",ascending=False).iloc[:15,:],"most")
@@ -260,7 +260,7 @@ visualize_most_least_popular_candies(df.sort_values(by="winpercent",ascending=Tr
 df['winpercent'].describe()
 
 
-# In[37]:
+# In[18]:
 
 
 # convert winpercent from continous->categorical variable
@@ -272,7 +272,7 @@ def convert_winpercent_to_cat(x):
     return 'high'
 
 
-# In[40]:
+# In[19]:
 
 
 df['winpercent_class']=df['winpercent'].apply(convert_winpercent_to_cat)
@@ -280,7 +280,7 @@ df['winpercent_class']=df['winpercent'].apply(convert_winpercent_to_cat)
 
 # ###  distribution of winpercent in three categories
 
-# In[41]:
+# In[20]:
 
 
 plt.figure(figsize=(7, 7))
@@ -294,7 +294,7 @@ plt.show()
 
 # + We notice that $44.7\%$ of the candies fall within the medium winpercent category, while $18.82\%$ belong to the high winpercent category.
 
-# In[46]:
+# In[21]:
 
 
 
@@ -364,7 +364,7 @@ plt.show()
 
 # We see that **chocolate** and **winpercent** have the largest correlation. Also bar and winpercent just as peanutyalmondy and winpercent have noticeable correlations. But we have to be careful because also **chocolate** and **bar** have a large correlation.
 
-# In[72]:
+# In[23]:
 
 
 # function which visualize the count of presence of a variable and its winpercent with bar and box plot
@@ -388,7 +388,7 @@ def show_count_and_winpercent_of_x_in_top20(variable):
 
 # ### chocolate
 
-# In[74]:
+# In[24]:
 
 
 show_count_and_winpercent_of_x_in_top20('chocolate')
@@ -408,25 +408,25 @@ show_count_and_winpercent_of_x_in_top20('fruity')
 
 # ### bar
 
-# In[30]:
+# In[26]:
 
 
 chocolate_with_x('bar')
 
 
-# In[31]:
+# In[ ]:
 
 
 df[(df['bar']==1) & (df['chocolate']==0)]
 
 
-# In[32]:
+# In[ ]:
 
 
 df[(df['bar']==1) & (df['chocolate']==1)].shape
 
 
-# In[33]:
+# In[ ]:
 
 
 fig, ax = plt.subplots(1, 3, figsize=(12, 6))  # Corrected figsize and subplot layout
@@ -442,7 +442,7 @@ plt.show()
 
 # Initially, a strong correlation was found between **bar** and **winpercent**, but this association was primarily driven by the presence of chocolate. Considering only candies with **chocolate**, the correlation between **bar** and **winpercent** vanished. There is also a small difference in winpercent between **chocolate** with **bar** or without **bar**.
 
-# In[34]:
+# In[ ]:
 
 
 ## function to show a combination of chocolate with other variable.
@@ -451,7 +451,7 @@ def chocolate_with_x(x):
    ]].groupby(['chocolate', x], as_index=False).count()
 
 
-# In[35]:
+# In[ ]:
 
 
 ## function show winpercent of a feature overall and in combination with chocolate with the help of bar and boxplot
@@ -473,14 +473,14 @@ def bar_box_plot_showing_winpercent(x):
     plt.show()
 
 
-# In[36]:
+# In[ ]:
 
 
 def get_mean_winpercent_chocolate_with_x(x):
     return df[(df['chocolate']==1) & (df[x]==1)]['winpercent'].mean() 
 
 
-# In[37]:
+# In[ ]:
 
 
 def get_mean_winpercent_chocolate_without_x(x):
@@ -490,20 +490,20 @@ def get_mean_winpercent_chocolate_without_x(x):
 # ### peanutyalmondy
 # As we saw there is a strong correlation between peanutyalmondy and chocolate let's have a close look on it.
 
-# In[38]:
+# In[ ]:
 
 
 ## combination of chocolate with peanutyalmondy
 chocolate_with_x('peanutyalmondy')
 
 
-# In[39]:
+# In[ ]:
 
 
 get_mean_winpercent_chocolate_with_x('peanutyalmondy')
 
 
-# In[40]:
+# In[ ]:
 
 
 get_mean_winpercent_chocolate_without_x('peanutyalmondy')
@@ -511,7 +511,7 @@ get_mean_winpercent_chocolate_without_x('peanutyalmondy')
 
 # As candies that are **peanutyalmondy** nearly always contain **chocolate**, we narrow down our analysis to focus exclusively on candies that include **chocolate**.
 
-# In[41]:
+# In[ ]:
 
 
 ## winpercent of peanutyalmondy overall and also in combination with chocolate
@@ -522,21 +522,21 @@ bar_box_plot_showing_winpercent('peanutyalmondy')
 
 # ### pluribus
 
-# In[42]:
+# In[ ]:
 
 
 ## combination of chocolate with pluribus
 chocolate_with_x('pluribus')
 
 
-# In[43]:
+# In[ ]:
 
 
 # avg winpercent by chocolate with pluribux
 get_mean_winpercent_chocolate_with_x('pluribus')
 
 
-# In[44]:
+# In[ ]:
 
 
 # avg winpercent  by chocolate without pluribux
@@ -545,7 +545,7 @@ get_mean_winpercent_chocolate_without_x('pluribus')
 
 # Interestingly, despite the presence of **chocolate** in 12 different candies that also contain the **pluribus** feature, the inclusion of **pluribus** alongside **chocolate** appears to result in a decrease in the **winpercent** of these candies.
 
-# In[45]:
+# In[ ]:
 
 
 ## winpercent of pluribus overall and also in combination with chocolate
@@ -556,14 +556,14 @@ bar_box_plot_showing_winpercent('pluribus')
 
 # ### nougat
 
-# In[46]:
+# In[ ]:
 
 
 ## combination of chocolate with nougat
 chocolate_with_x('nougat')
 
 
-# In[47]:
+# In[ ]:
 
 
 ## winpercent of nougat overall and also in combination with chocolate
@@ -574,20 +574,20 @@ bar_box_plot_showing_winpercent('nougat')
 
 # ### caramel
 
-# In[48]:
+# In[ ]:
 
 
 ## combination of chocolate with nougat
 chocolate_with_x('caramel')
 
 
-# In[49]:
+# In[ ]:
 
 
 get_mean_winpercent_chocolate_with_x('caramel')
 
 
-# In[50]:
+# In[ ]:
 
 
 get_mean_winpercent_chocolate_without_x('caramel')
@@ -595,7 +595,7 @@ get_mean_winpercent_chocolate_without_x('caramel')
 
 # The majority of **chocolate** candies do not contain **caramel**. However, there are still some chocolate candies that include **caramel** as an ingredient. Additionally, inclusion of **caramel** with **chocolate** increases the avg **winpercent**
 
-# In[51]:
+# In[ ]:
 
 
 ## winpercent of caramel overall and also in combination with chocolate
@@ -606,14 +606,14 @@ bar_box_plot_showing_winpercent('caramel')
 
 # ### Fruity
 
-# In[52]:
+# In[ ]:
 
 
 ## combination of chocolate with fruity
 chocolate_with_x('fruity')
 
 
-# In[53]:
+# In[ ]:
 
 
 ## winpercent of fruity overall and also in combination with chocolate
@@ -624,7 +624,7 @@ bar_box_plot_showing_winpercent('fruity')
 
 # ### Hard
 
-# In[54]:
+# In[ ]:
 
 
 ## combination of chocolate with hard
@@ -633,7 +633,7 @@ chocolate_with_x('hard')
 
 # Almost every **hard** cookie does not have **chocolate**
 
-# In[55]:
+# In[ ]:
 
 
 ## winpercent of hard overall and also in combination with chocolate
@@ -644,26 +644,26 @@ bar_box_plot_showing_winpercent('hard')
 
 # ### crispedricewafer
 
-# In[56]:
+# In[ ]:
 
 
 ## combination of chocolate with crispedricewafer
 chocolate_with_x('crispedricewafer')
 
 
-# In[57]:
+# In[ ]:
 
 
 get_mean_winpercent_chocolate_with_x('crispedricewafer')
 
 
-# In[58]:
+# In[ ]:
 
 
 get_mean_winpercent_chocolate_without_x('crispedricewafer')
 
 
-# In[59]:
+# In[ ]:
 
 
 ## winpercent of crispedricewafer overall and also in combination with chocolate
@@ -674,14 +674,14 @@ bar_box_plot_showing_winpercent('crispedricewafer')
 
 # ### pluribus
 
-# In[60]:
+# In[ ]:
 
 
 ## combination of chocolate with pluribus
 chocolate_with_x('pluribus')
 
 
-# In[61]:
+# In[ ]:
 
 
 ## winpercent of pluribus overall and also in combination with chocolate
@@ -693,7 +693,7 @@ bar_box_plot_showing_winpercent('pluribus')
 # ### pricepercent
 # Since pricepercent differs for fruity and for chocolate, we separate the candies for the analysis.
 
-# In[62]:
+# In[ ]:
 
 
 chocolate_df = df[df['chocolate'] == 1]
@@ -718,7 +718,7 @@ plt.show()
 # ### sugarpercent
 # Because of the association between sugar content and both fruity and chocolate candies, we distinguish between these two categories based on their sugar content.
 
-# In[63]:
+# In[ ]:
 
 
 chocolate_df = df[df['chocolate'] == 1]
@@ -766,13 +766,67 @@ plt.show()
 # 
 # 
 
-# In[64]:
+# ## ANOVA: Analysis of Variance
+
+# In[32]:
+
+
+from scipy import stats
+
+
+# #### chocolate with peanutyalmondy
+
+# In[41]:
+
+
+peanutyalmondy_group=df[df['chocolate']==1][['peanutyalmondy','winpercent']].groupby('peanutyalmondy')
+f_val,p_val=stats.f_oneway(peanutyalmondy_group.get_group(0)['winpercent'],peanutyalmondy_group.get_group(1)['winpercent'])
+f_val,p_val
+
+
+# With an F-value of approximately 7.3118 and a p-value of approximately 0.0105, the analysis suggests that there is a significant difference in 'winpercent' between the groups based on the presence or absence of 'peanutyalmondy' in chocolates that contain chocolate. The p-value being less than 0.05 indicates that there is strong evidence to reject the null hypothesis, suggesting that the 'peanutyalmondy' ingredient does have a significant impact on the 'winpercent' within chocolates that contain chocolate.
+
+# #### chocolate and peanutyalmondy with caramel
+
+# In[37]:
+
+
+caramel_group=df[(df['chocolate']==1) & (df['peanutyalmondy']==1)][['caramel','winpercent']].groupby('caramel')
+f_val,p_val=stats.f_oneway(caramel_group.get_group(0)['winpercent'],caramel_group.get_group(1)['winpercent'])
+f_val,p_val
+
+
+# With an F-value of approximately 0.5591 and a p-value of approximately 0.4718, it seems that there is not enough evidence to reject the null hypothesis. Therefore, based on this analysis, it appears that there is no significant difference in 'winpercent' between the groups with and without caramel in this dataset.
+
+# #### chocolate and peanutyalmondy with caramel
+
+# In[38]:
+
+
+crispedricewafer_group=df[(df['chocolate']==1) & (df['peanutyalmondy']==1)][['crispedricewafer','winpercent']].groupby('crispedricewafer')
+f_val,p_val=stats.f_oneway(crispedricewafer_group.get_group(0)['winpercent'],crispedricewafer_group.get_group(1)['winpercent'])
+f_val,p_val
+
+
+# With an F-value of approximately 0.7314 and a p-value of approximately 0.4124, the analysis suggests that there is no significant difference in 'winpercent' between the groups based on the presence or absence of 'crispedricewafer' in the dataset. These results indicate that, according to this analysis, the variable 'crispedricewafer' doesn't appear to have a significant impact on the 'winpercent' in the context of the chocolates with both chocolate and peanut/almond ingredients.
+
+# In[39]:
+
+
+nougat_group=df[(df['chocolate']==1) & (df['peanutyalmondy']==1)][['nougat','winpercent']].groupby('nougat')
+f_val,p_val=stats.f_oneway(nougat_group.get_group(0)['winpercent'],nougat_group.get_group(1)['winpercent'])
+f_val,p_val
+
+
+# With an F-value of approximately 0.0547 and a p-value of approximately 0.8198, the analysis indicates that there is no significant difference in 'winpercent' between the groups based on the presence or absence of 'nougat' in the dataset. Therefore, according to this analysis, the 'nougat' ingredient does not seem to have a significant impact on the 'winpercent' within chocolates that contain both chocolate and peanut/almond ingredients.
+
+# In[ ]:
 
 
 df[df['chocolate']==1]['winpercent'].mean()
 
 
-# In[65]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==1)]['winpercent'].mean()
@@ -780,7 +834,7 @@ df[(df['chocolate']==1) & (df['peanutyalmondy']==1)]['winpercent'].mean()
 
 # **chocolate** in combination with **peanutyalmondy** has higher winpercent than **chocolate** alone
 
-# In[66]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['crispedricewafer']==1)]['winpercent'].mean()
@@ -790,14 +844,14 @@ df[(df['chocolate']==1) & (df['crispedricewafer']==1)]['winpercent'].mean()
 
 # ### chocolate, peanutyalmondy and crispedricewafer
 
-# In[67]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==1) &  
    (df['crispedricewafer']==1)].shape
 
 
-# In[68]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==1) &  
@@ -806,14 +860,14 @@ df[(df['chocolate']==1) & (df['peanutyalmondy']==1) &
 
 # ### chocolate, peanutyalmondy and not crispedricewafer
 
-# In[69]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==1) &  
    (df['crispedricewafer']==0)].shape
 
 
-# In[70]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==1) & 
@@ -824,14 +878,14 @@ df[(df['chocolate']==1) & (df['peanutyalmondy']==1) &
 
 # ### chocolate, peanutyalmondy and not nougat
 
-# In[71]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==1) &  
    (df['nougat']==0)].shape
 
 
-# In[72]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==1) & 
@@ -840,14 +894,14 @@ df[(df['chocolate']==1) & (df['peanutyalmondy']==1) &
 
 # ### chocolate, peanutyalmondy and nougat¶
 
-# In[73]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==1) &  
    (df['nougat']==1)].shape
 
 
-# In[74]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==1) & 
@@ -856,14 +910,14 @@ df[(df['chocolate']==1) & (df['peanutyalmondy']==1) &
 
 # ### chocolate, peanutyalmondy, and caramel 
 
-# In[75]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==1) & 
    (df['caramel']==1)].shape
 
 
-# In[76]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==1) & 
@@ -874,14 +928,14 @@ df[(df['chocolate']==1) & (df['peanutyalmondy']==1) &
 
 # ## chocolate, peanutyalmondy, but not caramel 
 
-# In[77]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==1) & 
    (df['caramel']==0)].shape
 
 
-# In[78]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==1) & 
@@ -892,14 +946,14 @@ df[(df['chocolate']==1) & (df['peanutyalmondy']==1) &
 
 # ### chocolate, not peanutyalmondy, and caramel
 
-# In[79]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==0) & 
    (df['caramel']==1)].shape
 
 
-# In[80]:
+# In[ ]:
 
 
 df[(df['chocolate']==1) & (df['peanutyalmondy']==0) & 
@@ -916,7 +970,7 @@ df[(df['chocolate']==1) & (df['peanutyalmondy']==0) &
 
 # Splitting into features and target variable
 
-# In[81]:
+# In[ ]:
 
 
 X = df[['chocolate', 'peanutyalmondy', 'crispedricewafer', 'nougat', 'caramel']] ## features
@@ -926,7 +980,7 @@ Y = df['winpercent'] # target variable
 # 
 # Given the absence of missing or duplicate values in our dataset, there's no immediate need for data cleaning procedures. Moreover, our categorical variables are already in a normalized form, which is advantageous. To enhance the accuracy of our model, we can apply the <code>StandardScaler</code> method specifically to the 'pricepercent' and 'sugarpercent' variables for scaling purposes.
 
-# In[82]:
+# In[ ]:
 
 
 from sklearn.preprocessing import StandardScaler
@@ -937,14 +991,14 @@ X[['sugarpercent', 'pricepercent']] = scaler.fit_transform(X[['sugarpercent', 'p
 # ### Split data into training and testing sets
 #   I want to use $75\%$ data for training purpose and rest for the testing purpose.
 
-# In[83]:
+# In[ ]:
 
 
 from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(X,Y , test_size=0.25, random_state=42)
 
 
-# In[84]:
+# In[ ]:
 
 
 X_train.shape, X_test.shape
@@ -956,7 +1010,7 @@ X_train.shape, X_test.shape
 
 # ### fit the model
 
-# In[85]:
+# In[ ]:
 
 
 from sklearn.linear_model import LinearRegression
@@ -967,7 +1021,7 @@ logreg.fit(X_train, Y_train)
 
 # ### model evaluation
 
-# In[86]:
+# In[ ]:
 
 
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
@@ -994,7 +1048,7 @@ print(f"Mean Squared Error (MSE): {mse}")
 
 # ### important features
 
-# In[87]:
+# In[ ]:
 
 
 feature_importance_df = pd.DataFrame({'Feature':X.columns
@@ -1015,19 +1069,19 @@ plt.show()
 
 # ### convert **winpercent_class** into numberic
 
-# In[88]:
+# In[ ]:
 
 
 df['winpercent_class'].unique()
 
 
-# In[89]:
+# In[ ]:
 
 
 df['winpercent_class_numeric']=df['winpercent_class'].map({'low':0,'medium':1,'high':2})
 
 
-# In[90]:
+# In[ ]:
 
 
 X = df[['chocolate', 'peanutyalmondy', 'crispedricewafer', 'nougat', 'caramel']] ## features
@@ -1035,7 +1089,7 @@ Y = df['winpercent_class_numeric'] # target variable
 X_train, X_test, Y_train, Y_test = train_test_split(X,Y , test_size=0.25, random_state=42)
 
 
-# In[91]:
+# In[ ]:
 
 
 from sklearn.tree import DecisionTreeClassifier
@@ -1049,7 +1103,7 @@ clf.fit(X_train, Y_train)
 
 # ## model evaluation
 
-# In[92]:
+# In[ ]:
 
 
 from sklearn.metrics import accuracy_score, confusion_matrix
@@ -1064,7 +1118,7 @@ accuracy*100
 
 # ### heatmap for confusion metrix
 
-# In[93]:
+# In[ ]:
 
 
 conf_matrix = confusion_matrix(Y_test, predictions)
@@ -1080,7 +1134,7 @@ plt.yticks(rotation=30)
 plt.show()
 
 
-# In[94]:
+# In[ ]:
 
 
 from sklearn.metrics import classification_report
@@ -1094,7 +1148,7 @@ print("Classification Report:")
 print(report)
 
 
-# In[95]:
+# In[ ]:
 
 
 importances = clf.feature_importances_
